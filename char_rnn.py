@@ -87,7 +87,6 @@ class CharRNNModel:
             raise ValueError(f"seed contains invalid characters")
 
         generated = sentence
-        yield generated
 
         for i in range(length):
             x_pred = np.zeros((1, self.sample_length, len(self.chars)))
@@ -106,6 +105,9 @@ class CharRNNModel:
     def generate_sample_seed(self, text):
         start_index = random.randint(0, len(text) - self.sample_length - 1)
         return text[start_index : start_index + self.sample_length]
+
+    def generate_random_seed(self):
+        return "".join(random.choice(self.chars) for x in range(self.sample_length))
 
     def save(self, filepath):
         import h5py
